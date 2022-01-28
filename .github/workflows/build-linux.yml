@@ -1,0 +1,22 @@
+
+name: Linux build
+
+on:
+  push:
+    branches:
+    - '**'
+
+env:
+  LANG: en_US.UTF-8
+
+jobs:
+  determine-version:
+    runs-on: ubuntu-20.04
+    outputs:
+      simpleTag: ${{ steps.fetchSimpleTag.outputs.tag }}
+      jvcmi_version: ${{ steps.fetchVersion.outputs.jvcmi_version }}
+    steps:
+    - id: fetchSimpleTag
+      run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+    - id: fetchVersion
+      run: echo ::set-output name=jvcmi_version::$($GITHUB_REF log --decorate | grep -E 'tag: jvmci-\d+\.\d+-b\d+' | sed 's/.*(\(tag: .*\))/\1/g' | tr ',' '\n' | grep 'tag:' | sed 's/.*tag: \(jvmci-[^,)]*\).*/\1/g' | sort -nr | head -1)
