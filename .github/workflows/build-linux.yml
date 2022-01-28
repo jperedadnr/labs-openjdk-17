@@ -8,15 +8,19 @@ on:
 
 env:
   LANG: en_US.UTF-8
+  JVMCI_VERSION: jvmci-22.0-b03
 
 jobs:
-  determine-version:
+  build:
     runs-on: ubuntu-20.04
-    outputs:
-      simpleTag: ${{ steps.fetchSimpleTag.outputs.tag }}
-      jvcmi_version: ${{ steps.fetchVersion.outputs.jvcmi_version }}
     steps:
-    - id: fetchSimpleTag
-      run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
-    - id: fetchVersion
-      run: echo ::set-output name=jvcmi_version::$($GITHUB_REF log --decorate | grep -E 'tag: jvmci-\d+\.\d+-b\d+' | sed 's/.*(\(tag: .*\))/\1/g' | tr ',' '\n' | grep 'tag:' | sed 's/.*tag: \(jvmci-[^,)]*\).*/\1/g' | sort -nr | head -1)
+    - name: Configure
+      run: |
+        sh configure --with-conf-name=labsjdk --with-version-opt=${{ env.JVMCI_VERSION }} --with-version-pre= '--with-vendor-name=GraalVM Community --with-vendor-url=https://www.graalvm.org/ --with-vendor-bug-url=https://github.com/oracle/graal/issues --with-vendor-vm-bug-url=https://github.com/oracle/graal/issues
+        make CONF_NAME=labsjdk graal-builder-image
+        zip -rq labsjdk-17-linux.zip build/labsjdk/images/graal-builder-jdk
+    - name: Upload
+      uses: actions/upload-artifact@v2
+      with:
+        name: labsjdk-17-linux
+        path: labsjdk-17-linux.zip
