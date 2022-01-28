@@ -28,7 +28,7 @@ jobs:
         mkdir -p build/labsjdk/images/graal-builder-jdk/lib/static/linux-amd64/glibc/
         mv build/labsjdk/images/graal-builder-jdk/lib/*.a build/labsjdk/images/graal-builder-jdk/lib/static/linux-amd64/glibc/
         mkdir labsjdk-ce-17-${{ env.JVMCI_VERSION }}
-        mv build/labsjdk/images/graal-builder-jdk/ labsjdk-ce-17-${{ env.JVMCI_VERSION }}/
+        mv build/labsjdk/images/graal-builder-jdk/* labsjdk-ce-17-${{ env.JVMCI_VERSION }}/
         zip -rq labsjdk-17-linux.zip labsjdk-ce-17-${{ env.JVMCI_VERSION }}
         
     - name: Upload
