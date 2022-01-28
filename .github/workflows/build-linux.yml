@@ -16,7 +16,7 @@ jobs:
     steps:
     - name: Configure
       run: |
-        sh configure --with-conf-name=labsjdk --with-version-opt=${{ env.JVMCI_VERSION }} --with-version-pre= '--with-vendor-name=GraalVM Community --with-vendor-url=https://www.graalvm.org/ --with-vendor-bug-url=https://github.com/oracle/graal/issues --with-vendor-vm-bug-url=https://github.com/oracle/graal/issues
+        sh configure --with-conf-name=labsjdk --with-version-opt=${{ env.JVMCI_VERSION }} --with-version-pre= '--with-vendor-name=GraalVM Community' --with-vendor-url=https://www.graalvm.org/ --with-vendor-bug-url=https://github.com/oracle/graal/issues --with-vendor-vm-bug-url=https://github.com/oracle/graal/issues
         make CONF_NAME=labsjdk graal-builder-image
         zip -rq labsjdk-17-linux.zip build/labsjdk/images/graal-builder-jdk
     - name: Upload
