@@ -19,7 +19,7 @@ jobs:
     - name: Libraries
       run: |
           sudo apt update
-          sudo apt install libx11-dev libxext-dev libxrender-dev libxrandr-dev libxtst-dev libxt-dev libcups2-dev
+          sudo apt install libx11-dev libxext-dev libxrender-dev libxrandr-dev libxtst-dev libxt-dev libcups2-dev libasound2-dev
     
     - name: Configure
       run: |
