@@ -16,6 +16,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
+    - name: Libraries
+      run: |
+          sudo apt update
+          sudo apt install libx11-dev libxext-dev libxrender-dev libxrandr-dev libxtst-dev libxt-dev
+    
     - name: Configure
       run: |
         sh configure --with-conf-name=labsjdk --with-version-opt=${{ env.JVMCI_VERSION }} --with-version-pre= '--with-vendor-name=GraalVM Community' --with-vendor-url=https://www.graalvm.org/ --with-vendor-bug-url=https://github.com/oracle/graal/issues --with-vendor-vm-bug-url=https://github.com/oracle/graal/issues
