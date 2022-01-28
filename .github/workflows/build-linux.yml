@@ -8,7 +8,7 @@ on:
 
 env:
   LANG: en_US.UTF-8
-  JVMCI_VERSION: jvmci-22.0-b03
+  JVMCI_VERSION: jvmci-22.0-b02
 
 jobs:
   build:
@@ -27,7 +27,9 @@ jobs:
         make CONF_NAME=labsjdk graal-builder-image
         mkdir -p build/labsjdk/images/graal-builder-jdk/lib/static/linux-amd64/glibc/
         mv build/labsjdk/images/graal-builder-jdk/lib/*.a build/labsjdk/images/graal-builder-jdk/lib/static/linux-amd64/glibc/
-        zip -rq labsjdk-17-linux.zip build/labsjdk/images/graal-builder-jdk
+        mkdir labsjdk-ce-17-${{ env.JVMCI_VERSION }}
+        mv build/labsjdk/images/graal-builder-jdk/ labsjdk-ce-17-${{ env.JVMCI_VERSION }}/
+        zip -rq labsjdk-17-linux.zip labsjdk-ce-17-${{ env.JVMCI_VERSION }}
         
     - name: Upload
       uses: actions/upload-artifact@v2
