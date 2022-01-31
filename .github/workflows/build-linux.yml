@@ -30,7 +30,7 @@ jobs:
       run: |
         mkdir labsjdk-ce-17-${{ env.JVMCI_VERSION }}-static-libs
         cp build/labsjdk/images/static-libs/lib/* labsjdk-ce-17-${{ env.JVMCI_VERSION }}-static-libs/
-        zip labsjdk-17-static-libs-linux.zip labsjdk-ce-17-${{ env.JVMCI_VERSION }}-static-libs
+        zip -r labsjdk-17-static-libs-linux.zip labsjdk-ce-17-${{ env.JVMCI_VERSION }}-static-libs
         
     - name: Upload
       uses: actions/upload-artifact@v2
