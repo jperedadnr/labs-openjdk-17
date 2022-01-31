@@ -25,12 +25,15 @@ jobs:
       run: |
         sh configure --with-conf-name=labsjdk --with-version-opt=${{ env.JVMCI_VERSION }} --with-native-debug-symbols=none --with-version-pre= '--with-vendor-name=GraalVM Community' --with-vendor-url=https://www.graalvm.org/ --with-vendor-bug-url=https://github.com/oracle/graal/issues --with-vendor-vm-bug-url=https://github.com/oracle/graal/issues
         make CONF_NAME=labsjdk static-libs-image
+
+    - name: Create zip
+      run: |
         mkdir labsjdk-ce-17-${{ env.JVMCI_VERSION }}-static-libs
-        mv build/labsjdk/images/static-libs/lib/* labsjdk-ce-17-${{ env.JVMCI_VERSION }}-static-libs/
-        zip -rq labsjdk-17-static-libs-linux.zip labsjdk-ce-17-${{ env.JVMCI_VERSION }}-static-libs
+        cp build/labsjdk/images/static-libs/lib/* labsjdk-ce-17-${{ env.JVMCI_VERSION }}-static-libs/
+        zip labsjdk-17-static-libs-linux.zip labsjdk-ce-17-${{ env.JVMCI_VERSION }}-static-libs
         
     - name: Upload
       uses: actions/upload-artifact@v2
       with:
-        name: labsjdk-17-linux-static-libs
-        path: labsjdk-17-linux-static-libs.zip
+        name: labsjdk-17-static-libs-linux
+        path: labsjdk-17-static-libs-linux.zip
